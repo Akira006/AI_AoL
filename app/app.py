@@ -59,20 +59,48 @@ def predict():
     try:
         data = request.get_json()
 
+        # ini untuk single output exp: "Insomnia"
+        # processed = preprocess_input(data)
+        # pred_encoded = model.predict(processed)[0]
+        # pred_label = label_encoder.inverse_transform([pred_encoded])[0]
+
+        # return jsonify({
+        #     "prediction": pred_label,
+        #     "status": "success"
+        # })
+
         processed = preprocess_input(data)
-        pred_encoded = model.predict(processed)[0]
-        pred_label = label_encoder.inverse_transform([pred_encoded])[0]
+
+        # === ambil probabilitas ===
+        proba = model.predict_proba(processed)[0]
+        labels = label_encoder.classes_
+
+        # mapping label -> percentage
+        proba_dict = {
+            label: round(float(p) * 100, 2)
+            for label, p in zip(labels, proba)
+        }
+
+        # ambil prediksi tertinggi
+        best_idx = int(proba.argmax())
+        final_label = labels[best_idx]
+        confidence = round(proba[best_idx] * 100, 2)
 
         return jsonify({
-            "prediction": pred_label,
+            "prediction": final_label,
+            "confidence": confidence,
+            "probabilities": proba_dict,
             "status": "success"
         })
 
+
     except Exception as e:
         return jsonify({
-            "error": str(e),
-            "status": "failed"
-        })
+            "status": "failed",
+            "error_type": type(e).__name__,
+            "message": str(e)
+    }), 400
+
 
 # === Run server ===
 if __name__ == "__main__":
