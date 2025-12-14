@@ -3,9 +3,7 @@ venv/
 __pycache__/
 *.pyc
 
-# ML artifacts
-artifacts/
-*.pkl
+
 
 # Jupyter
 .ipynb_checkpoints/

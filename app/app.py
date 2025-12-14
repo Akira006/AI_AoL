@@ -5,10 +5,17 @@ import pandas as pd
 app = Flask(__name__)
 
 # === Load Artifacts ===
-MODEL_PATH = r"D:\PythonFlask\artifacts\sleep_model.pkl"
-SCALER_PATH = r"D:\PythonFlask\artifacts\scaler.pkl"
-ENCODER_PATH = r"D:\PythonFlask\artifacts\label_encoder.pkl"
-FEATURE_PATH = r"D:\PythonFlask\artifacts\model_features.pkl"
+# MODEL_PATH = r"D:\PythonFlask\artifacts\sleep_model.pkl"
+# SCALER_PATH = r"D:\PythonFlask\artifacts\scaler.pkl"
+# ENCODER_PATH = r"D:\PythonFlask\artifacts\label_encoder.pkl"
+# FEATURE_PATH = r"D:\PythonFlask\artifacts\model_features.pkl"
+
+MODEL_PATH = "artifacts/sleep_model.pkl"
+SCALER_PATH = "artifacts/scaler.pkl"
+ENCODER_PATH = "artifacts/label_encoder.pkl"
+FEATURE_PATH = "artifacts/model_features.pkl"
+
+
 
 model = joblib.load(MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
